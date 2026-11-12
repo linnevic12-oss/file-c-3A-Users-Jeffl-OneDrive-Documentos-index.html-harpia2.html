@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HARPIA — Análise Teórica de Atos Internacionais | UFPB</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cinzel, Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            harpia: {
+              bg: '#070e1a',
+              surface: '#0c1629',
+              card: '#111e36',
+              border: '#1e3256',
+              gold: '#d4af37',
+              goldLight: '#f3d06b',
+              goldDark: '#9e7f1e',
+              text: '#e2e8f0',
+              muted: '#94a3b8'
+            }
+          },
+          fontFamily: {
+            display: ['Cinzel', 'Playfair Display', 'serif'],
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #070e1a;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Gradientes e detalhes dourados */
+    .gold-text-gradient {
+      background: linear-gradient(135deg, #f3d06b 0%, #d4af37 50%, #aa851c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gold-border-glow {
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.12);
+    }
+
+    .gold-btn {
+      background: linear-gradient(135deg, #d4af37 0%, #b59021 100%);
+      color: #070e1a;
+      transition: all 0.25s ease;
+    }
+    .gold-btn:hover {
+      background: linear-gradient(135deg, #f3d06b 0%, #d4af37 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Scrollbar customizada */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070e1a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e3256;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+
+    /* Animações suaves */
+    .fade-in {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Padrão de fundo sutil */
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-harpia-gold selection:text-harpia-bg">
+
+  <!-- ===================================================================== -->
+  <!-- NOTIFICAÇÃO TOAST CUSTOMIZADA (Substitui alert())                     -->
+  <!-- ===================================================================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 1: TELA INICIAL INSTITUCIONAL (LANDING PAGE)                     -->
+  <!-- ===================================================================== -->
+  <div id="view-landing" class="min-h-screen flex flex-col bg-harpia-bg bg-grid-pattern">
+    
+    <!-- Header Institucional -->
+    <header class="sticky top-0 z-40 bg-harpia-bg/90 backdrop-blur-md border-b border-harpia-border/70">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <!-- Logo HARPIA -->
+        <a href="#" onclick="navigateTo('landing')" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-xl bg-harpia-surface border border-harpia-gold/40 flex items-center justify-center shadow-lg group-hover:border-harpia-gold transition">
+            <!-- Emblema SVG da Harpia Estilizada -->
+            <svg class="w-7 h-7 text-harpia-gold" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 6L12 18L18 32L8 44L26 42L32 58L38 42L56 44L46 32L52 18L32 6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M32 14L23 26L32 34L41 26L32 14Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+              <path d="M28 24L32 28L36 24" stroke="#f3d06b" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="32" cy="19" r="1.5" fill="#f3d06b"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-display font-bold text-xl tracking-widest text-white block leading-none">HARPIA</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] text-harpia-gold font-medium">UFPB • Relações Internacionais</span>
+          </div>
+        </a>
+
+        <!-- Menu Desktop -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-harpia-muted">
+          <a href="#hero" class="hover:text-harpia-gold transition">Início</a>
+          <a href="#teorias" class="hover:text-harpia-gold transition">Matrizes Teóricas</a>
+          <a href="#sobre-metodologia" class="hover:text-harpia-gold transition">Sobre e Metodologia</a>
+          <a href="#creditos" class="hover:text-harpia-gold transition">Equipe Acadêmica</a>
+        </nav>
+
+        <!-- Botão CTA Header -->
+        <div class="flex items-center gap-3">
+          <button onclick="enterPlatform('dashboard')" class="gold-btn px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 cursor-pointer">
+            <span>Entrar na Harpia</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
+      <!-- Efeito de luz radial de fundo -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-harpia-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-harpia-surface border border-harpia-gold/30 text-harpia-goldLight text-xs font-medium tracking-wider uppercase mb-8">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-harpia-gold"></i>
+          <span>Inteligência Artificial & Teoria das Relações Internacionais</span>
+        </div>
+
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white max-w-4xl mx-auto leading-tight mb-6">
+          Uma nova perspectiva sobre os <span class="gold-text-gradient">atos internacionais.</span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-harpia-muted max-w-2xl mx-auto leading-relaxed mb-10">
+          Plataforma acadêmica desenvolvida na Universidade Federal da Paraíba (UFPB) para auxiliar estudantes e pesquisadores na leitura crítica de tratados, acordos e resoluções internacionais sob o prisma do <strong>Realismo</strong>, <strong>Marxismo</strong> e <strong>Escola Inglesa</strong>.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onclick="enterPlatform('dashboard')" class="w-full sm:w-auto gold-btn px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2.5 shadow-xl cursor-pointer">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+            <span>Entrar na Harpia</span>
+          </button>
+          <a href="#sobre-metodologia" class="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-base bg-harpia-surface hover:bg-harpia-card text-white border border-harpia-border hover:border-harpia-gold/50 transition flex items-center justify-center gap-2">
+            <span>Conheça a plataforma</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-harpia-gold"></i>
+          </a>
+        </div>
+
+        <!-- Preview Mini-Dashboard Decorativo -->
+        <div class="mt-16 max-w-5xl mx-auto bg-harpia-surface/90 border border-harpia-border rounded-2xl p-4 sm:p-6 shadow-2xl gold-border-glow text-left">
+          <div class="flex items-center justify-between border-b border-harpia-border pb-3 mb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-400/80"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              <span class="ml-2 text-xs text-harpia-muted font-mono">harpia.ufpb.br — Análise Assistida: Acordo Brasil-Chile (Concórdia nº 12314)</span>
+            </div>
+            <span class="text-xs px-2.5 py-0.5 rounded bg-harpia-gold/10 text-harpia-gold border border-harpia-gold/30 font-medium">Acesso Livre Acadêmico</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-harpia-bg/80 p-4 rounded-xl border border-harpia-border/70">
+              <div class="text-xs text-harpia-gold uppercase font-semibold mb-1">Base Documental</div>
+              <div class="text-sm font-medium text-white">Sistema Concórdia (MRE) & ONU</div>
+              <p class="text-xs text-harpia-muted mt-1">Separação rigorosa entre metadados oficiais, texto normativo original e inferência teórica.</p>
+            </div>
+            <div class="bg-harpia-bg/80 p-4 rounded-xl border border-harpia-border/70">
+              <div class="text-xs text-harpia-gold uppercase font-semibold mb-1">Triangulação Teórica</div>
+              <div class="text-sm font-medium text-white">3 Lentes Analíticas Simultâneas</div>
+              <p class="text-xs text-harpia-muted mt-1">Compare como diferentes tradições interpretam os mesmos dispositivos de um tratado.</p>
+            </div>
+            <div class="bg-harpia-bg/80 p-4 rounded-xl border border-harpia-border/70">
+              <div class="text-xs text-harpia-gold uppercase font-semibold mb-1">Rigor Epistemológico</div>
+              <div class="text-sm font-medium text-white">Transparência de Prompt & Limites</div>
+              <p class="text-xs text-harpia-muted mt-1">A IA atua como assistente heurístico, exigindo verificação crítica humana do pesquisador.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção das 3 Teorias -->
+    <section id="teorias" class="py-20 bg-harpia-surface/50 border-y border-harpia-border/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="text-xs font-bold tracking-[0.2em] text-harpia-gold uppercase">Lentes Interpretativas</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">Três Tradições das Relações Internacionais</h2>
+          <p class="text-harpia-muted text-sm sm:text-base">
+            Um mesmo ato internacional pode revelar dinâmicas distintas conforme a matriz teórica mobilizada. Explore cada abordagem diretamente na plataforma.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Card Realismo -->
+          <div class="bg-harpia-card border border-harpia-border hover:border-harpia-gold/60 rounded-2xl p-7 transition group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-blue-950 border border-blue-700/50 flex items-center justify-center text-harpia-gold mb-5 group-hover:scale-105 transition">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-display text-xl font-bold text-white mb-2">Realismo</h3>
+              <p class="text-xs font-semibold uppercase tracking-wider text-harpia-gold mb-4">Poder, segurança e interesses nacionais</p>
+              <p class="text-sm text-harpia-muted leading-relaxed mb-6">
+                Analisa os tratados como instrumentos de cálculo estratégico estatal em um sistema anárquico. Foca na preservação da soberania, autonomia regulatória, ganhos relativos e controle governamental.
+              </p>
+            </div>
+            <button onclick="enterPlatform('teorias', 'realismo')" class="text-sm font-semibold text-harpia-goldLight hover:text-harpia-gold flex items-center gap-1.5 cursor-pointer">
+              <span>Explorar matriz realista</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Card Marxismo -->
+          <div class="bg-harpia-card border border-harpia-border hover:border-harpia-gold/60 rounded-2xl p-7 transition group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-rose-950/60 border border-rose-700/40 flex items-center justify-center text-harpia-gold mb-5 group-hover:scale-105 transition">
+                <i data-lucide="scale" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-display text-xl font-bold text-white mb-2">Marxismo</h3>
+              <p class="text-xs font-semibold uppercase tracking-wider text-harpia-gold mb-4">Capital, produção e desigualdades</p>
+              <p class="text-sm text-harpia-muted leading-relaxed mb-6">
+                Investiga como acordos internacionais articulam a expansão do capital, a divisão internacional do trabalho, a assimetria entre classes sociais e o papel do Estado na regulação econômica.
+              </p>
+            </div>
+            <button onclick="enterPlatform('teorias', 'marxismo')" class="text-sm font-semibold text-harpia-goldLight hover:text-harpia-gold flex items-center gap-1.5 cursor-pointer">
+              <span>Explorar matriz marxista</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Card Escola Inglesa -->
+          <div class="bg-harpia-card border border-harpia-border hover:border-harpia-gold/60 rounded-2xl p-7 transition group flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-950/60 border border-emerald-700/40 flex items-center justify-center text-harpia-gold mb-5 group-hover:scale-105 transition">
+                <i data-lucide="globe-2" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-display text-xl font-bold text-white mb-2">Escola Inglesa</h3>
+              <p class="text-xs font-semibold uppercase tracking-wider text-harpia-gold mb-4">Normas, instituições e ordem internacional</p>
+              <p class="text-sm text-harpia-muted leading-relaxed mb-6">
+                Observa a formação de uma sociedade internacional regida por regras compartilhadas, diplomacia institucionalizada, comitês bilaterais e mecanismos pacíficos de consulta e cooperação.
+              </p>
+            </div>
+            <button onclick="enterPlatform('teorias', 'inglesa')" class="text-sm font-semibold text-harpia-goldLight hover:text-harpia-gold flex items-center gap-1.5 cursor-pointer">
+              <span>Explorar Escola Inglesa</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Sobre e Funcionamento (5 Passos) -->
+    <section id="sobre-metodologia" class="py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs font-bold tracking-[0.2em] text-harpia-gold uppercase">Fluxo Metodológico</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">Sobre e Funcionamento</h2>
+          <p class="text-harpia-muted text-sm sm:text-base">
+            A Harpia estrutura a análise documental em cinco etapas rigorosas para evitar anacronismos ou alucinações interpretativas.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+          <!-- Passo 1 -->
+          <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 relative">
+            <span class="text-3xl font-display font-bold text-harpia-gold/25 absolute top-4 right-5">01</span>
+            <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center mb-4">
+              <i data-lucide="search" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-2">Pesquisa no Concórdia MRE</h4>
+            <p class="text-xs text-harpia-muted leading-relaxed">
+              Localização de atos internacionais oficiais, decretos de promulgação e registros bilaterais ou multilaterais.
+            </p>
+          </div>
+
+          <!-- Passo 2 -->
+          <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 relative">
+            <span class="text-3xl font-display font-bold text-harpia-gold/25 absolute top-4 right-5">02</span>
+            <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center mb-4">
+              <i data-lucide="folder-kanban" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-2">Organização</h4>
+            <p class="text-xs text-harpia-muted leading-relaxed">
+              Segmentação estruturada entre metadados do ato, preâmbulo, capítulos específicos e dispositivos normativos.
+            </p>
+          </div>
+
+          <!-- Passo 3 -->
+          <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 relative">
+            <span class="text-3xl font-display font-bold text-harpia-gold/25 absolute top-4 right-5">03</span>
+            <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center mb-4">
+              <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-2">Perspectiva Teórica</h4>
+            <p class="text-xs text-harpia-muted leading-relaxed">
+              Seleção da lente analítica (Realismo, Marxismo ou Escola Inglesa) e mobilização de seus conceitos operacionais.
+            </p>
+          </div>
+
+          <!-- Passo 4 -->
+          <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 relative">
+            <span class="text-3xl font-display font-bold text-harpia-gold/25 absolute top-4 right-5">04</span>
+            <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center mb-4">
+              <i data-lucide="cpu" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-2">Análise IA</h4>
+            <p class="text-xs text-harpia-muted leading-relaxed">
+              Processamento guiado por prompts acadêmicos calibrados, ancorando cada afirmação nos artigos exatos do texto.
+            </p>
+          </div>
+
+          <!-- Passo 5 -->
+          <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 relative">
+            <span class="text-3xl font-display font-bold text-harpia-gold/25 absolute top-4 right-5">05</span>
+            <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center mb-4">
+              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-bold text-white text-base mb-2">Verificação Crítica</h4>
+            <p class="text-xs text-harpia-muted leading-relaxed">
+              Revisão pelo estudante ou pesquisador, confrontando limites do texto isolado e bibliografia especializada.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Créditos Acadêmicos -->
+    <footer id="creditos" class="bg-harpia-surface border-t border-harpia-border py-14 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 pb-10 border-b border-harpia-border/70">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-9 h-9 rounded-lg bg-harpia-bg border border-harpia-gold/40 flex items-center justify-center text-harpia-gold font-display font-bold">H</div>
+              <span class="font-display font-bold text-lg tracking-widest text-white">HARPIA</span>
+            </div>
+            <p class="text-xs text-harpia-muted leading-relaxed">
+              Plataforma de Análise Teórica de Atos Internacionais. Projeto acadêmico desenvolvido no âmbito do Curso de Relações Internacionais da Universidade Federal da Paraíba (UFPB), 2026.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-harpia-gold mb-3">Orientação Acadêmica</h4>
+            <p class="text-sm font-medium text-white">Prof. Dr. Henry Iure de Paiva Silva</p>
+            <p class="text-xs text-harpia-muted mt-1">Departamento de Relações Internacionais — CCSA / UFPB</p>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-harpia-gold mb-3">Autores & Desenvolvimento</h4>
+            <ul class="text-xs text-harpia-muted space-y-1.5">
+              <li class="text-slate-300">• Pedro Otávio</li>
+              <li class="text-slate-300">• Brendson Roberto</li>
+              <li class="text-slate-300">• Sarah Carolina</li>
+              <li class="text-slate-300">• Marília do Nascimento</li>
+              <li class="text-slate-300">• Alinne Victoria</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-harpia-muted gap-4">
+          <p>© 2026 Projeto HARPIA — Universidade Federal da Paraíba (UFPB). Todos os direitos reservados para fins educacionais.</p>
+          <button onclick="enterPlatform('dashboard')" class="text-harpia-gold hover:underline font-medium cursor-pointer">
+            Acessar Ambiente Interativo →
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 2: APLICAÇÃO PRINCIPAL (APP VIEW COM SIDEBAR FIXA)               -->
+  <!-- ===================================================================== -->
+  <div id="view-app" class="hidden min-h-screen flex flex-col lg:flex-row bg-harpia-bg">
+    
+    <!-- Barra Superior Mobile -->
+    <div class="lg:hidden flex items-center justify-between bg-harpia-surface border-b border-harpia-border px-4 py-3 sticky top-0 z-40">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-harpia-bg border border-harpia-gold/40 flex items-center justify-center text-harpia-gold font-display font-bold">H</div>
+        <span class="font-display font-bold text-base tracking-widest text-white">HARPIA</span>
+      </div>
+      <button onclick="toggleMobileSidebar()" class="p-2 rounded-lg bg-harpia-card border border-harpia-border text-harpia-gold">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Overlay Mobile Sidebar -->
+    <div id="mobile-sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+
+    <!-- SIDEBAR FIXA -->
+    <aside id="app-sidebar" class="fixed lg:sticky top-0 left-0 z-50 h-screen w-72 bg-harpia-surface border-r border-harpia-border flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out">
+      <div>
+        <!-- Brand Sidebar -->
+        <div class="h-20 px-6 flex items-center justify-between border-b border-harpia-border/80">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-harpia-bg border border-harpia-gold/40 flex items-center justify-center">
+              <svg class="w-6 h-6 text-harpia-gold" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 6L12 18L18 32L8 44L26 42L32 58L38 42L56 44L46 32L52 18L32 6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M32 14L23 26L32 34L41 26L32 14Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <span class="font-display font-bold text-lg tracking-widest text-white block leading-none">HARPIA</span>
+              <span class="text-[10px] text-harpia-gold uppercase tracking-wider">UFPB • RI 2026</span>
+            </div>
+          </div>
+          <button onclick="toggleMobileSidebar()" class="lg:hidden text-harpia-muted hover:text-white">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Seletor de Persona -->
+        <div class="px-5 py-4 border-b border-harpia-border/60">
+          <label class="block text-[10px] uppercase tracking-wider text-harpia-muted font-semibold mb-1.5">Perfil de Acesso (Persona)</label>
+          <select id="persona-selector" onchange="changePersona(this.value)" class="w-full bg-harpia-bg border border-harpia-border text-xs text-white rounded-lg px-3 py-2 focus:outline-none focus:border-harpia-gold cursor-pointer">
+            <option value="marilia">Marília (Pesquisadora / Autora)</option>
+            <option value="gabriel">Gabriel, 21 (Estudante de Graduação)</option>
+            <option value="helena">Helena, 32 (Pesquisadora / Doutoranda)</option>
+          </select>
+        </div>
+
+        <!-- Menu de Navegação -->
+        <nav class="p-4 space-y-1.5">
+          <button onclick="switchAppTab('dashboard')" data-tab="dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition cursor-pointer bg-harpia-gold/15 text-harpia-gold border border-harpia-gold/30">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>Início (Dashboard)</span>
+          </button>
+
+          <button onclick="switchAppTab('analisar')" data-tab="analisar" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-harpia-muted hover:bg-harpia-card hover:text-white transition cursor-pointer">
+            <i data-lucide="file-search" class="w-4 h-4"></i>
+            <span>Analisar Documento</span>
+          </button>
+
+          <button onclick="switchAppTab('comparador')" data-tab="comparador" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-harpia-muted hover:bg-harpia-card hover:text-white transition cursor-pointer">
+            <i data-lucide="columns-3" class="w-4 h-4"></i>
+            <span>Comparador Teórico</span>
+          </button>
+
+          <button onclick="switchAppTab('teorias')" data-tab="teorias" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-harpia-muted hover:bg-harpia-card hover:text-white transition cursor-pointer">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>Referenciais Teóricos</span>
+          </button>
+
+          <button onclick="switchAppTab('acervo')" data-tab="acervo" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-harpia-muted hover:bg-harpia-card hover:text-white transition cursor-pointer">
+            <i data-lucide="archive" class="w-4 h-4"></i>
+            <span>Acervo Concórdia</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="p-4 border-t border-harpia-border/80">
+        <button onclick="navigateTo('landing')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-harpia-muted hover:text-red-400 hover:bg-red-950/20 transition cursor-pointer">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          <span>Sair para Capa</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO DINÂMICO -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+
+      <!-- ================================================================= -->
+      <!-- ABA 1: DASHBOARD                                                  -->
+      <!-- ================================================================= -->
+      <section id="tab-dashboard" class="app-tab fade-in space-y-6">
+        
+        <!-- Saudação e Contexto -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-harpia-surface border border-harpia-border rounded-2xl p-6">
+          <div>
+            <div class="flex items-center gap-2 text-xs text-harpia-gold font-semibold uppercase tracking-wider mb-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span id="persona-badge">Pesquisadora • Núcleo RI-UFPB</span>
+            </div>
+            <h1 id="greeting-title" class="font-display text-2xl sm:text-3xl font-bold text-white">Olá, Marília!</h1>
+            <p id="greeting-subtitle" class="text-sm text-harpia-muted mt-1">
+              Bem-vinda de volta à Harpia. Continue sua investigação sobre tratados internacionais e matrizes teóricas.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="switchAppTab('analisar')" class="gold-btn px-5 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 cursor-pointer shadow-lg">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>Nova Análise</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid Principal do Dashboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Coluna Esquerda (2/3) -->
+          <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Card: Comece uma nova análise em 3 passos -->
+            <div class="bg-gradient-to-br from-harpia-card to-harpia-surface border border-harpia-gold/30 rounded-2xl p-6 shadow-xl">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="font-display text-lg font-bold text-white flex items-center gap-2">
+                  <i data-lucide="compass" class="w-5 h-5 text-harpia-gold"></i>
+                  <span>Comece uma nova análise em 3 passos</span>
+                </h2>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-harpia-gold/10 text-harpia-gold font-medium">Fluxo Guiado</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="bg-harpia-bg/70 border border-harpia-border rounded-xl p-4">
+                  <span class="inline-block w-6 h-6 rounded-full bg-harpia-gold text-harpia-bg font-bold text-xs text-center leading-6 mb-2">1</span>
+                  <h3 class="text-sm font-semibold text-white">Escolha o Ato</h3>
+                  <p class="text-xs text-harpia-muted mt-1">Selecione um tratado do Acervo Concórdia/ONU ou cole um trecho.</p>
+                </div>
+                <div class="bg-harpia-bg/70 border border-harpia-border rounded-xl p-4">
+                  <span class="inline-block w-6 h-6 rounded-full bg-harpia-gold text-harpia-bg font-bold text-xs text-center leading-6 mb-2">2</span>
+                  <h3 class="text-sm font-semibold text-white">Defina a Lente</h3>
+                  <p class="text-xs text-harpia-muted mt-1">Escolha Realismo, Marxismo, Escola Inglesa ou combinação.</p>
+                </div>
+                <div class="bg-harpia-bg/70 border border-harpia-border rounded-xl p-4">
+                  <span class="inline-block w-6 h-6 rounded-full bg-harpia-gold text-harpia-bg font-bold text-xs text-center leading-6 mb-2">3</span>
+                  <h3 class="text-sm font-semibold text-white">Inspecione a IA</h3>
+                  <p class="text-xs text-harpia-muted mt-1">Verifique os artigos citados, referências e prompt transparente.</p>
+                </div>
+              </div>
+
+              <button onclick="switchAppTab('analisar')" class="w-full sm:w-auto gold-btn px-6 py-3 rounded-xl font-semibold text-sm inline-flex items-center justify-center gap-2 cursor-pointer">
+                <span>Ir para Analisar Documento</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Card: Perspectivas Disponíveis -->
+            <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="font-display text-lg font-bold text-white">Perspectivas Disponíveis</h2>
+                <button onclick="switchAppTab('comparador')" class="text-xs text-harpia-gold hover:underline font-medium cursor-pointer">
+                  Comparar lado a lado →
+                </button>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div onclick="openTheoryFromDashboard('realismo')" class="bg-harpia-card hover:bg-harpia-card/80 border border-harpia-border hover:border-harpia-gold/50 rounded-xl p-4 cursor-pointer transition group">
+                  <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="shield" class="w-5 h-5 text-harpia-gold"></i>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-harpia-muted group-hover:text-harpia-gold transition"></i>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Realismo</h3>
+                  <p class="text-xs text-harpia-muted mt-1">Soberania, poder e interesses nacionais.</p>
+                </div>
+
+                <div onclick="openTheoryFromDashboard('marxismo')" class="bg-harpia-card hover:bg-harpia-card/80 border border-harpia-border hover:border-harpia-gold/50 rounded-xl p-4 cursor-pointer transition group">
+                  <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="scale" class="w-5 h-5 text-harpia-gold"></i>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-harpia-muted group-hover:text-harpia-gold transition"></i>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Marxismo</h3>
+                  <p class="text-xs text-harpia-muted mt-1">Capital, produção e assimetrias sociais.</p>
+                </div>
+
+                <div onclick="openTheoryFromDashboard('inglesa')" class="bg-harpia-card hover:bg-harpia-card/80 border border-harpia-border hover:border-harpia-gold/50 rounded-xl p-4 cursor-pointer transition group">
+                  <div class="flex items-center justify-between mb-2">
+                    <i data-lucide="globe-2" class="w-5 h-5 text-harpia-gold"></i>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-harpia-muted group-hover:text-harpia-gold transition"></i>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Escola Inglesa</h3>
+                  <p class="text-xs text-harpia-muted mt-1">Normas, instituições e sociedade internacional.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card: Acessos Recentes -->
+            <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="font-display text-lg font-bold text-white">Acessos Recentes</h2>
+                <span class="text-xs text-harpia-muted">Clique para abrir a análise</span>
+              </div>
+
+              <div class="space-y-3">
+                <!-- Item 1 -->
+                <div onclick="quickOpenAnalysis('brasil-chile', ['realismo'])" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-harpia-card border border-harpia-border hover:border-harpia-gold/60 cursor-pointer transition group">
+                  <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center shrink-0 mt-0.5">
+                      <i data-lucide="file-text" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-sm font-bold text-white group-hover:text-harpia-goldLight transition">Acordo de Livre Comércio Brasil-Chile</h3>
+                      <p class="text-xs text-harpia-muted">Registro Concórdia nº 12314 • Decreto nº 10.949/2022 • Cap. 8 (Arts. 8.15–8.24)</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2 self-end sm:self-center">
+                    <span class="text-[11px] px-2.5 py-1 rounded-md bg-harpia-bg border border-harpia-border text-harpia-gold">Realismo</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-harpia-muted group-hover:text-harpia-gold"></i>
+                  </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div onclick="quickOpenAnalysis('onu-2625', ['inglesa'])" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-harpia-card border border-harpia-border hover:border-harpia-gold/60 cursor-pointer transition group">
+                  <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center shrink-0 mt-0.5">
+                      <i data-lucide="file-text" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-sm font-bold text-white group-hover:text-harpia-goldLight transition">Resolução 2625 (XXV) da Assembleia Geral da ONU</h3>
+                      <p class="text-xs text-harpia-muted">Declaração sobre Princípios de Direito Internacional • 24 de outubro de 1970</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2 self-end sm:self-center">
+                    <span class="text-[11px] px-2.5 py-1 rounded-md bg-harpia-bg border border-harpia-border text-harpia-gold">Escola Inglesa</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-harpia-muted group-hover:text-harpia-gold"></i>
+                  </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div onclick="quickOpenAnalysis('tca-amazonia', ['marxismo'])" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-harpia-card border border-harpia-border hover:border-harpia-gold/60 cursor-pointer transition group">
+                  <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-harpia-gold/10 text-harpia-gold flex items-center justify-center shrink-0 mt-0.5">
+                      <i data-lucide="file-text" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-sm font-bold text-white group-hover:text-harpia-goldLight transition">Tratado de Cooperação Amazônica (TCA)</h3>
+                      <p class="text-xs text-harpia-muted">Registro Concórdia nº 3098 • Decreto nº 85.050/1980 • Cooperação Regional</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2 self-end sm:self-center">
+                    <span class="text-[11px] px-2.5 py-1 rounded-md bg-harpia-bg border border-harpia-border text-harpia-gold">Marxismo</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-harpia-muted group-hover:text-harpia-gold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Direita (1/3): Seu Progresso -->
+          <div class="space-y-6">
+            <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 flex flex-col items-center text-center">
+              <div class="w-full flex items-center justify-between mb-4">
+                <h2 class="font-display text-lg font-bold text-white">Seu Progresso</h2>
+                <span class="text-xs text-harpia-gold bg-harpia-gold/10 px-2.5 py-0.5 rounded-full">Semestre 2026.1</span>
+              </div>
+
+              <!-- Gráfico Circular SVG Dinâmico -->
+              <div class="relative w-44 h-44 my-3 flex items-center justify-center">
+                <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="#1e3256" stroke-width="10" />
+                  <circle id="progress-circle-bar" cx="60" cy="60" r="50" fill="none" stroke="#d4af37" stroke-width="10"
+                          stroke-dasharray="314.16" stroke-dashoffset="87.96" stroke-linecap="round"
+                          class="transition-all duration-700 ease-out" />
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                  <span id="progress-percent-text" class="font-display text-3xl font-bold text-white">72%</span>
+                  <span class="text-[11px] text-harpia-muted uppercase tracking-wider">Conclusão</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-harpia-muted mb-6">
+                Realize novas análises ou salve documentos para avançar sua trilha de pesquisa teórica.
+              </p>
+
+              <!-- Métricas Numéricas -->
+              <div class="w-full space-y-3 text-left">
+                <div class="flex items-center justify-between p-3 rounded-xl bg-harpia-bg border border-harpia-border">
+                  <div class="flex items-center gap-2.5">
+                    <i data-lucide="file-check" class="w-4 h-4 text-harpia-gold"></i>
+                    <span class="text-xs text-slate-300">Análises realizadas</span>
+                  </div>
+                  <span id="stat-analyses-count" class="text-sm font-bold text-white">3</span>
+                </div>
+
+                <div class="flex items-center justify-between p-3 rounded-xl bg-harpia-bg border border-harpia-border">
+                  <div class="flex items-center gap-2.5">
+                    <i data-lucide="layers" class="w-4 h-4 text-harpia-gold"></i>
+                    <span class="text-xs text-slate-300">Teorias exploradas</span>
+                  </div>
+                  <span id="stat-theories-count" class="text-sm font-bold text-white">1 / 3</span>
+                </div>
+
+                <div class="flex items-center justify-between p-3 rounded-xl bg-harpia-bg border border-harpia-border">
+                  <div class="flex items-center gap-2.5">
+                    <i data-lucide="bookmark" class="w-4 h-4 text-harpia-gold"></i>
+                    <span class="text-xs text-slate-300">Documentos salvos</span>
+                  </div>
+                  <span id="stat-saved-count" class="text-sm font-bold text-white">2</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nota Metodológica Rápida -->
+            <div class="bg-harpia-card border border-harpia-gold/25 rounded-2xl p-5">
+              <div class="flex items-center gap-2 text-harpia-gold text-xs font-bold uppercase tracking-wider mb-2">
+                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                <span>Aviso Epistemológico</span>
+              </div>
+              <p class="text-xs text-harpia-muted leading-relaxed">
+                O texto normativo isolado de um acordo internacional não comprova, por si só, exploração econômica ou disputa hegemônica. Utilize as interpretações como hipóteses analíticas a serem confrontadas com dados empíricos.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ================================================================= -->
+      <!-- ABA 2: ANALISAR DOCUMENTO (MÓDULO INTERATIVO + RESULTADO)         -->
+      <!-- ================================================================= -->
+      <section id="tab-analisar" class="app-tab hidden fade-in space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="font-display text-2xl sm:text-3xl font-bold text-white">Analisar Ato Internacional</h1>
+            <p class="text-sm text-harpia-muted mt-1">Configure o documento-base e a lente teórica para gerar uma leitura estruturada.</p>
+          </div>
+        </div>
+
+        <!-- Painel de Configuração da Análise -->
+        <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6 space-y-6">
+          
+          <!-- Passo 1: Seleção de Fonte -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-harpia-gold mb-3">
+              1. Selecione o Documento do Acervo ou Insira Trecho Personalizado
+            </label>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <select id="doc-selector" onchange="handleDocSelectChange(this.value)" class="w-full bg-harpia-bg border border-harpia-border text-sm text-white rounded-xl px-4 py-3 focus:outline-none focus:border-harpia-gold cursor-pointer">
+                  <option value="brasil-chile">Acordo de Livre Comércio Brasil-Chile (Concórdia nº 12314 / Dec. 10.949/2022)</option>
+                  <option value="onu-2625">Resolução 2625 (XXV) da Assembleia Geral da ONU (1970)</option>
+                  <option value="tca-amazonia">Tratado de Cooperação Amazônica - TCA (Concórdia nº 3098 / Dec. 85.050/1980)</option>
+                  <option value="custom">✍️ Colar trecho personalizado de tratado/acordo...</option>
+                </select>
+              </div>
+              <div id="doc-meta-preview" class="bg-harpia-bg/80 border border-harpia-border rounded-xl px-4 py-2.5 flex items-center justify-between text-xs">
+                <span class="text-harpia-muted">Escopo selecionado:</span>
+                <span class="text-harpia-goldLight font-medium">Capítulo 8 — Comércio e Investimentos (Arts. 8.15 a 8.24)</span>
+              </div>
+            </div>
+
+            <!-- Área de Texto Personalizado (Oculta por padrão) -->
+            <div id="custom-text-container" class="hidden space-y-3 bg-harpia-bg p-4 rounded-xl border border-harpia-border">
+              <input id="custom-doc-title" type="text" placeholder="Título ou identificação do ato (ex: Acordo Bilateral de Cooperação Técnica...)" class="w-full bg-harpia-surface border border-harpia-border rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-harpia-gold">
+              <textarea id="custom-doc-text" rows="4" placeholder="Cole aqui os artigos ou cláusulas do tratado que deseja submeter à leitura teórica..." class="w-full bg-harpia-surface border border-harpia-border rounded-lg p-3.5 text-sm text-white focus:outline-none focus:border-harpia-gold"></textarea>
+            </div>
+          </div>
+
+          <!-- Passo 2: Seleção de Perspectiva Teórica (Múltipla opcional) -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <label class="block text-xs font-bold uppercase tracking-wider text-harpia-gold">
+                2. Escolha a(s) Perspectiva(s) Teórica(s)
+              </label>
+              <span class="text-xs text-harpia-muted">Você pode selecionar uma ou combinar múltiplas lentes</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Opção Realismo -->
+              <label class="cursor-pointer">
+                <input type="checkbox" name="theory-choice" value="realismo" checked class="peer sr-only">
+                <div class="p-4 rounded-xl bg-harpia-bg border border-harpia-border peer-checked:border-harpia-gold peer-checked:bg-harpia-gold/10 transition">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-white text-sm flex items-center gap-2">
+                      <i data-lucide="shield" class="w-4 h-4 text-harpia-gold"></i> Realismo
+                    </span>
+                    <span class="w-4 h-4 rounded border border-harpia-gold flex items-center justify-center text-harpia-gold text-xs">✓</span>
+                  </div>
+                  <p class="text-xs text-harpia-muted">Soberania, autonomia regulatória e interesses estatais.</p>
+                </div>
+              </label>
+
+              <!-- Opção Marxismo -->
+              <label class="cursor-pointer">
+                <input type="checkbox" name="theory-choice" value="marxismo" class="peer sr-only">
+                <div class="p-4 rounded-xl bg-harpia-bg border border-harpia-border peer-checked:border-harpia-gold peer-checked:bg-harpia-gold/10 transition">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-white text-sm flex items-center gap-2">
+                      <i data-lucide="scale" class="w-4 h-4 text-harpia-gold"></i> Marxismo
+                    </span>
+                    <span class="w-4 h-4 rounded border border-harpia-gold flex items-center justify-center text-harpia-gold text-xs">✓</span>
+                  </div>
+                  <p class="text-xs text-harpia-muted">Capital transnacional, trabalho e distribuição de benefícios.</p>
+                </div>
+              </label>
+
+              <!-- Opção Escola Inglesa -->
+              <label class="cursor-pointer">
+                <input type="checkbox" name="theory-choice" value="inglesa" class="peer sr-only">
+                <div class="p-4 rounded-xl bg-harpia-bg border border-harpia-border peer-checked:border-harpia-gold peer-checked:bg-harpia-gold/10 transition">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-white text-sm flex items-center gap-2">
+                      <i data-lucide="globe-2" class="w-4 h-4 text-harpia-gold"></i> Escola Inglesa
+                    </span>
+                    <span class="w-4 h-4 rounded border border-harpia-gold flex items-center justify-center text-harpia-gold text-xs">✓</span>
+                  </div>
+                  <p class="text-xs text-harpia-muted">Sociedade internacional, normas e mecanismos de consulta.</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Botão Executar -->
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-harpia-border/70">
+            <div class="text-xs text-harpia-muted flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-harpia-gold"></i>
+              <span>Separação automática entre Dados de Registro, Texto Original e Interpretação.</span>
+            </div>
+            <button onclick="runAIAnalysis()" id="btn-run-analysis" class="w-full sm:w-auto gold-btn px-7 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2.5 cursor-pointer shadow-lg">
+              <i data-lucide="cpu" class="w-4 h-4"></i>
+              <span>Executar Análise com IA</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Estado de Loading / Simulação de Processamento IA -->
+        <div id="analysis-loading" class="hidden bg-harpia-surface border border-harpia-gold/40 rounded-2xl p-8 text-center space-y-4">
+          <div class="w-12 h-12 rounded-full border-2 border-harpia-gold border-t-transparent animate-spin mx-auto"></div>
+          <h3 class="font-display text-lg font-bold text-white">Processando Leitura Teórica...</h3>
+          <p id="loading-step-text" class="text-xs text-harpia-goldLight font-mono">
+            [1/3] Extraindo metadados oficiais e indexando dispositivos normativos...
+          </p>
+        </div>
+
+        <!-- TELA DE RESULTADO: ANÁLISE CONCLUÍDA -->
+        <div id="analysis-result-container" class="hidden fade-in space-y-6">
+          
+          <!-- Banner de Sucesso e Ações -->
+          <div class="bg-gradient-to-r from-harpia-card via-harpia-surface to-harpia-card border border-harpia-gold/50 rounded-2xl p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0">
+                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                  <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Análise Concluída!</span>
+                  <span class="text-harpia-border">•</span>
+                  <span id="res-doc-registry" class="text-xs text-harpia-gold font-mono">Registro Concórdia nº 12314</span>
+                </div>
+                <h2 id="res-doc-title" class="font-display text-xl sm:text-2xl font-bold text-white">Acordo de Livre Comércio Brasil-Chile</h2>
+                <p id="res-doc-subtitle" class="text-xs text-harpia-muted mt-1">Promulgado pelo Decreto nº 10.949, de 26 de janeiro de 2022 • Análise sob lente(s): Realismo</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0">
+              <button onclick="saveCurrentAnalysis()" class="px-4 py-2.5 rounded-xl bg-harpia-bg hover:bg-harpia-card border border-harpia-gold/50 text-harpia-goldLight text-xs font-semibold flex items-center gap-2 cursor-pointer transition">
+                <i data-lucide="bookmark-plus" class="w-4 h-4"></i>
+                <span>Salvar nos Favoritos</span>
+              </button>
+              <button onclick="switchAppTab('comparador')" class="px-4 py-2.5 rounded-xl bg-harpia-gold/15 hover:bg-harpia-gold/25 border border-harpia-gold/40 text-harpia-gold text-xs font-semibold flex items-center gap-2 cursor-pointer transition">
+                <i data-lucide="columns-3" class="w-4 h-4"></i>
+                <span>Comparar Teorias</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Grid de Resultado (Conteúdo Principal + Coluna Lateral) -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Coluna Principal (2/3) com Abas Internas -->
+            <div class="lg:col-span-2 bg-harpia-surface border border-harpia-border rounded-2xl overflow-hidden flex flex-col">
+              
+              <!-- Navegação de Abas do Resultado -->
+              <div class="flex border-b border-harpia-border bg-harpia-bg/60 overflow-x-auto">
+                <button onclick="switchResultSubtab('interpretacao')" data-res-tab="interpretacao" class="res-subtab-btn px-5 py-3.5 text-xs sm:text-sm font-semibold text-harpia-gold border-b-2 border-harpia-gold whitespace-nowrap cursor-pointer">
+                  Interpretação Teórica
+                </button>
+                <button onclick="switchResultSubtab('dispositivos')" data-res-tab="dispositivos" class="res-subtab-btn px-5 py-3.5 text-xs sm:text-sm font-semibold text-harpia-muted hover:text-white whitespace-nowrap cursor-pointer">
+                  Dispositivos Relevantes
+                </button>
+                <button onclick="switchResultSubtab('prompt')" data-res-tab="prompt" class="res-subtab-btn px-5 py-3.5 text-xs sm:text-sm font-semibold text-harpia-muted hover:text-white whitespace-nowrap cursor-pointer">
+                  Prompt Interno e Limitações
+                </button>
+              </div>
+
+              <!-- Conteúdo das Sub-abas -->
+              <div class="p-6 flex-1">
+                
+                <!-- Sub-aba 1: Interpretação Teórica -->
+                <div id="res-subtab-interpretacao" class="res-subtab-content space-y-5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] uppercase tracking-wider font-bold text-harpia-gold bg-harpia-gold/10 px-3 py-1 rounded-full">
+                      Camada 3: Inferência Teórica Assistida
+                    </span>
+                    <span class="text-xs text-harpia-muted">Baseada estritamente nos dispositivos indexados</span>
+                  </div>
+                  
+                  <div id="res-interpretation-body" class="space-y-4 text-sm text-slate-200 leading-relaxed">
+                    <!-- Preenchido via JS -->
+                  </div>
+                </div>
+
+                <!-- Sub-aba 2: Dispositivos Relevantes -->
+                <div id="res-subtab-dispositivos" class="res-subtab-content hidden space-y-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[11px] uppercase tracking-wider font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">
+                      Camada 2: Conteúdo Normativo Original
+                    </span>
+                    <span class="text-xs text-harpia-muted">Texto literal / ementa oficial</span>
+                  </div>
+
+                  <div id="res-articles-body" class="space-y-3">
+                    <!-- Preenchido via JS -->
+                  </div>
+                </div>
+
+                <!-- Sub-aba 3: Prompt Interno e Limitações -->
+                <div id="res-subtab-prompt" class="res-subtab-content hidden space-y-5">
+                  <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-harpia-gold mb-2">Prompt Estruturado Utilizado pela Harpia</h4>
+                    <pre id="res-prompt-box" class="bg-harpia-bg border border-harpia-border rounded-xl p-4 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed"></pre>
+                  </div>
+
+                  <div class="bg-amber-950/30 border border-amber-600/40 rounded-xl p-4 space-y-2">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                      <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                      <span>Limitações Metodológicas e Verificação Crítica</span>
+                    </h4>
+                    <ul class="text-xs text-slate-300 space-y-1.5 list-disc pl-4">
+                      <li><strong>Autonomia do Texto:</strong> O texto normativo isolado não comprova exploração econômica efetiva nem disputa hegemônica concreta.</li>
+                      <li><strong>Contexto Histórico-Empírico:</strong> A análise documental deve ser complementada por dados comerciais, atas de negociação e conjuntura política.</li>
+                      <li><strong>Pluralismo Teórico:</strong> Nenhuma matriz esgota o significado de um tratado; recomenda-se o contraste no Comparador Teórico.</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Coluna Lateral (1/3): Trechos Citados & Referências -->
+            <div class="space-y-6">
+              
+              <!-- Caixa: Trechos do Documento -->
+              <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-5">
+                <h3 class="font-display text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <i data-lucide="quote" class="w-4 h-4 text-harpia-gold"></i>
+                  <span>Trechos do Documento</span>
+                </h3>
+                <div id="res-sidebar-quotes" class="space-y-3">
+                  <!-- Preenchido via JS -->
+                </div>
+              </div>
+
+              <!-- Caixa: Referências Utilizadas -->
+              <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-5">
+                <h3 class="font-display text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <i data-lucide="book-marked" class="w-4 h-4 text-harpia-gold"></i>
+                  <span>Referências Utilizadas</span>
+                </h3>
+                <ul class="space-y-2.5 text-xs text-harpia-muted">
+                  <li class="p-2.5 rounded-lg bg-harpia-bg border border-harpia-border/70">
+                    <strong class="text-slate-200">ARON, Raymond.</strong> <em>Paz e Guerra entre as Nações.</em> Brasília: Ed. UnB, 2002.
+                  </li>
+                  <li class="p-2.5 rounded-lg bg-harpia-bg border border-harpia-border/70">
+                    <strong class="text-slate-200">BULL, Hedley.</strong> <em>A Sociedade Anárquica.</em> Brasília: Ed. UnB / IPRI, 2002.
+                  </li>
+                  <li class="p-2.5 rounded-lg bg-harpia-bg border border-harpia-border/70">
+                    <strong class="text-slate-200">GUIMARÃES, Samuel Pinheiro.</strong> <em>Desafios Brasileiros na Era dos Gigantes.</em> Contraponto, 2006.
+                  </li>
+                  <li class="p-2.5 rounded-lg bg-harpia-bg border border-harpia-border/70">
+                    <strong class="text-slate-200">JACKSON, R.; SØRENSEN, G.</strong> <em>Introdução às Relações Internacionais.</em> Zahar, 2018.
+                  </li>
+                  <li class="p-2.5 rounded-lg bg-harpia-bg border border-harpia-border/70">
+                    <strong class="text-slate-200">NOGUEIRA, J. P.; MESSARI, N.</strong> <em>Teoria das Relações Internacionais.</em> Elsevier, 2005.
+                  </li>
+                  <li class="p-2.5 rounded-lg bg-harpia-bg border border-harpia-border/70">
+                    <strong class="text-slate-200">ROCHA, Antônio Jorge Ramalho.</strong> <em>Relações Internacionais: Teorias e Agendas.</em> IBRI, 2002.
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ================================================================= -->
+      <!-- ABA 3: COMPARADOR TEÓRICO INTERATIVO                              -->
+      <!-- ================================================================= -->
+      <section id="tab-comparador" class="app-tab hidden fade-in space-y-6">
+        
+        <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-harpia-border">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-harpia-gold">Estudo de Caso Comparado • Registro Concórdia nº 12314</span>
+              <h1 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">Comparador Teórico: Acordo Brasil-Chile</h1>
+              <p class="text-sm text-harpia-muted mt-1">
+                Observe lado a lado como Realismo, Marxismo e Escola Inglesa interpretam os <strong>Artigos 8.15 a 8.24</strong> do Capítulo 8.
+              </p>
+            </div>
+
+            <!-- Filtros Interativos de Visualização -->
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="filterComparator('all')" data-comp-filter="all" class="comp-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-harpia-gold text-harpia-bg cursor-pointer">
+                Todas as 3 Lentes
+              </button>
+              <button onclick="filterComparator('realismo')" data-comp-filter="realismo" class="comp-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold cursor-pointer">
+                Realismo
+              </button>
+              <button onclick="filterComparator('marxismo')" data-comp-filter="marxismo" class="comp-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold cursor-pointer">
+                Marxismo
+              </button>
+              <button onclick="filterComparator('inglesa')" data-comp-filter="inglesa" class="comp-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold cursor-pointer">
+                Escola Inglesa
+              </button>
+            </div>
+          </div>
+
+          <!-- Grid das 3 Colunas Comparativas -->
+          <div id="comparator-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+            
+            <!-- Coluna 1: Realismo -->
+            <div data-comp-col="realismo" class="comp-col bg-harpia-card border border-harpia-border rounded-2xl p-6 flex flex-col justify-between space-y-5">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-3 py-1 rounded-full bg-blue-950 border border-blue-700/50 text-harpia-gold text-xs font-bold uppercase">Realismo</span>
+                  <span class="text-xs font-mono text-harpia-goldLight">Arts. 8.17 e 8.18</span>
+                </div>
+                <h3 class="font-display text-lg font-bold text-white mb-3">Autonomia Estatal & Controle Governamental</h3>
+                <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                  Sob a ótica realista (Aron; Jackson & Sørensen), o capítulo não dilui a soberania estatal. Pelo contrário, o <strong>Art. 8.17</strong> resguarda explicitamente o direito de cada Parte adotar ou manter medidas regulatórias em defesa de objetivos legítimos de política pública.
+                </p>
+                <div class="bg-harpia-bg/90 border border-harpia-border rounded-xl p-3.5 space-y-2">
+                  <div class="text-[11px] font-bold text-harpia-gold uppercase">Evidências Textuais</div>
+                  <p class="text-xs text-harpia-muted">• <strong>Art. 8.17:</strong> Preservação das competências regulatórias internas.</p>
+                  <p class="text-xs text-harpia-muted">• <strong>Art. 8.18:</strong> O Comitê Conjunto é composto exclusivamente por representantes governamentais, mantendo a decisão nas mãos dos Estados.</p>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-harpia-border/60 text-[11px] text-harpia-muted">
+                <strong>Foco analítico:</strong> Soberania, interesse nacional e controle estatal.
+              </div>
+            </div>
+
+            <!-- Coluna 2: Marxismo -->
+            <div data-comp-col="marxismo" class="comp-col bg-harpia-card border border-harpia-border rounded-2xl p-6 flex flex-col justify-between space-y-5">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-3 py-1 rounded-full bg-rose-950/70 border border-rose-700/50 text-harpia-gold text-xs font-bold uppercase">Marxismo</span>
+                  <span class="text-xs font-mono text-harpia-goldLight">Arts. 8.15, 8.17, 8.18, 8.22</span>
+                </div>
+                <h3 class="font-display text-lg font-bold text-white mb-3">Capital, Diretrizes OCDE & Assimetrias</h3>
+                <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                  A leitura marxista/crítica (Guimarães; Nogueira & Messari) observa a articulação entre o Estado e a reprodução do capital transnacional. O <strong>Art. 8.15</strong> incorpora voluntariamente as <em>Diretrizes da OCDE para Empresas Multinacionais</em>, revelando padrões normativos originários do centro capitalista.
+                </p>
+                <div class="bg-harpia-bg/90 border border-harpia-border rounded-xl p-3.5 space-y-2">
+                  <div class="text-[11px] font-bold text-harpia-gold uppercase">Evidências Textuais</div>
+                  <p class="text-xs text-harpia-muted">• <strong>Art. 8.15:</strong> Responsabilidade Social Corporativa via parâmetros não vinculantes.</p>
+                  <p class="text-xs text-harpia-muted">• <strong>Art. 8.22:</strong> Cooperação sobre capital humano e trabalho subordinada à lógica de competitividade e fluxos de investimento.</p>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-harpia-border/60 text-[11px] text-harpia-muted">
+                <strong>Foco analítico:</strong> Relação capital-trabalho, distribuição de benefícios e inserção periférica.
+              </div>
+            </div>
+
+            <!-- Coluna 3: Escola Inglesa -->
+            <div data-comp-col="inglesa" class="comp-col bg-harpia-card border border-harpia-border rounded-2xl p-6 flex flex-col justify-between space-y-5">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-3 py-1 rounded-full bg-emerald-950/70 border border-emerald-700/50 text-harpia-gold text-xs font-bold uppercase">Escola Inglesa</span>
+                  <span class="text-xs font-mono text-harpia-goldLight">Arts. 8.18, 8.19 e 8.24</span>
+                </div>
+                <h3 class="font-display text-lg font-bold text-white mb-3">Instituições & Sociedade Internacional</h3>
+                <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                  Para a Escola Inglesa (Hedley Bull), o acordo exemplifica a institucionalização de regras comuns que mitigam a anarquia. Os dispositivos criam canais permanentes de diálogo diplomático, transparência e prevenção de controvérsias.
+                </p>
+                <div class="bg-harpia-bg/90 border border-harpia-border rounded-xl p-3.5 space-y-2">
+                  <div class="text-[11px] font-bold text-harpia-gold uppercase">Evidências Textuais</div>
+                  <p class="text-xs text-harpia-muted">• <strong>Art. 8.18 & 8.19:</strong> Comitê Conjunto e Pontos Focais Nacionais para gestão cooperativa.</p>
+                  <p class="text-xs text-harpia-muted">• <strong>Art. 8.24:</strong> Consultas diretas e boa-fé na resolução pacífica de divergências.</p>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-harpia-border/60 text-[11px] text-harpia-muted">
+                <strong>Foco analítico:</strong> Normas compartilhadas, diplomacia institucional e ordem internacional.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Síntese Epistemológica: Convergências, Divergências e Complementaridades -->
+          <div class="mt-8 bg-harpia-bg border border-harpia-gold/30 rounded-2xl p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <i data-lucide="git-merge" class="w-5 h-5 text-harpia-gold"></i>
+              <span>Síntese Epistemológica: Convergências, Divergências e Complementaridades</span>
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs leading-relaxed">
+              <div class="p-4 rounded-xl bg-harpia-surface border border-harpia-border">
+                <h4 class="font-bold text-harpia-gold uppercase mb-1.5">Convergências</h4>
+                <p class="text-slate-300">
+                  As três abordagens reconhecem que o Acordo Brasil-Chile institui mecanismos formais de governança bilateral e preserva o protagonismo jurídico dos Estados signatários na condução das políticas públicas.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-xl bg-harpia-surface border border-harpia-border">
+                <h4 class="font-bold text-harpia-gold uppercase mb-1.5">Divergências</h4>
+                <p class="text-slate-300">
+                  Enquanto o Realismo vê o Comitê Conjunto como instrumento de controle soberano, a Escola Inglesa o interpreta como norma de sociabilidade diplomática, e o Marxismo problematiza o caráter não vinculante das obrigações empresariais.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-xl bg-harpia-surface border border-harpia-border">
+                <h4 class="font-bold text-harpia-gold uppercase mb-1.5">Complementaridades & Rigor</h4>
+                <p class="text-slate-300">
+                  Nenhuma leitura é intrinsecamente superior. O texto normativo isolado <strong>não prova exploração nem disputa</strong>; a combinação das lentes amplia o repertório de perguntas empíricas do pesquisador.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ================================================================= -->
+      <!-- ABA 4: REFERENCIAIS TEÓRICOS                                      -->
+      <!-- ================================================================= -->
+      <section id="tab-teorias" class="app-tab hidden fade-in space-y-6">
+        
+        <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6">
+          <div class="mb-6">
+            <h1 class="font-display text-2xl sm:text-3xl font-bold text-white">Referenciais Teóricos</h1>
+            <p class="text-sm text-harpia-muted mt-1">Explore os conceitos-chave, perguntas orientadoras e checklists de investigação documental de cada tradição.</p>
+          </div>
+
+          <!-- Seletor de Abas das Teorias -->
+          <div class="flex flex-wrap gap-3 border-b border-harpia-border pb-4 mb-6">
+            <button onclick="selectTheoryDetail('realismo')" data-theory-tab="realismo" class="theory-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold bg-harpia-gold text-harpia-bg flex items-center gap-2 cursor-pointer">
+              <i data-lucide="shield" class="w-4 h-4"></i>
+              <span>Realismo</span>
+            </button>
+            <button onclick="selectTheoryDetail('marxismo')" data-theory-tab="marxismo" class="theory-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold flex items-center gap-2 cursor-pointer">
+              <i data-lucide="scale" class="w-4 h-4"></i>
+              <span>Marxismo</span>
+            </button>
+            <button onclick="selectTheoryDetail('inglesa')" data-theory-tab="inglesa" class="theory-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold flex items-center gap-2 cursor-pointer">
+              <i data-lucide="globe-2" class="w-4 h-4"></i>
+              <span>Escola Inglesa</span>
+            </button>
+          </div>
+
+          <!-- Conteúdo Dinâmico da Teoria Selecionada -->
+          <div id="theory-detail-content" class="fade-in">
+            <!-- Preenchido via JS -->
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ================================================================= -->
+      <!-- ABA 5: ACERVO CONCÓRDIA (CATÁLOGO DE ATOS)                        -->
+      <!-- ================================================================= -->
+      <section id="tab-acervo" class="app-tab hidden fade-in space-y-6">
+        <div class="bg-harpia-surface border border-harpia-border rounded-2xl p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-harpia-gold">Base Documental Indexada</span>
+              <h1 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">Acervo Concórdia MRE & Organismos</h1>
+              <p class="text-sm text-harpia-muted mt-1">Atos internacionais pré-catalogados com metadados oficiais prontos para análise teórica.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Doc Card 1 -->
+            <div class="bg-harpia-card border border-harpia-border rounded-2xl p-6 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-harpia-gold font-mono mb-3">
+                  <span>Concórdia nº 12314</span>
+                  <span>Bilateral • 2018/2022</span>
+                </div>
+                <h3 class="font-display text-lg font-bold text-white mb-2">Acordo de Livre Comércio Brasil-Chile</h3>
+                <p class="text-xs text-harpia-muted leading-relaxed mb-4">
+                  Promulgado pelo Decreto nº 10.949/2022. Incorpora temas regulatórios, investimentos, comércio eletrônico, cadeias globais e responsabilidade empresarial (Cap. 8).
+                </p>
+              </div>
+              <button onclick="quickOpenAnalysis('brasil-chile', ['realismo', 'marxismo', 'inglesa'])" class="w-full gold-btn py-2.5 rounded-xl text-xs font-bold cursor-pointer">
+                Analisar este Documento
+              </button>
+            </div>
+
+            <!-- Doc Card 2 -->
+            <div class="bg-harpia-card border border-harpia-border rounded-2xl p-6 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-harpia-gold font-mono mb-3">
+                  <span>AGNU Res. 2625 (XXV)</span>
+                  <span>Multilateral • 1970</span>
+                </div>
+                <h3 class="font-display text-lg font-bold text-white mb-2">Resolução 2625 da ONU</h3>
+                <p class="text-xs text-harpia-muted leading-relaxed mb-4">
+                  Declaração relativa aos Princípios do Direito Internacional referentes às Relações Amistosas e à Cooperação entre os Estados em conformidade com a Carta das Nações Unidas.
+                </p>
+              </div>
+              <button onclick="quickOpenAnalysis('onu-2625', ['inglesa', 'realismo'])" class="w-full gold-btn py-2.5 rounded-xl text-xs font-bold cursor-pointer">
+                Analisar este Documento
+              </button>
+            </div>
+
+            <!-- Doc Card 3 -->
+            <div class="bg-harpia-card border border-harpia-border rounded-2xl p-6 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-harpia-gold font-mono mb-3">
+                  <span>Concórdia nº 3098</span>
+                  <span>Regional • 1978/1980</span>
+                </div>
+                <h3 class="font-display text-lg font-bold text-white mb-2">Tratado de Cooperação Amazônica (TCA)</h3>
+                <p class="text-xs text-harpia-muted leading-relaxed mb-4">
+                  Promulgado pelo Decreto nº 85.050/1980. Estabelece o compromisso conjunto dos países amazônicos para o desenvolvimento harmônico e preservação da soberania regional.
+                </p>
+              </div>
+              <button onclick="quickOpenAnalysis('tca-amazonia', ['marxismo', 'realismo'])" class="w-full gold-btn py-2.5 rounded-xl text-xs font-bold cursor-pointer">
+                Analisar este Documento
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: DADOS, ESTADO DA APLICAÇÃO E INTERATIVIDADE               -->
+  <!-- ===================================================================== -->
+  <script>
+    // Inicializa ícones Lucide
+    lucide.createIcons();
+
+    // -----------------------------------------------------------------------
+    // 1. BANCO DE DADOS ACADÊMICO EMBUTIDO (DOCUMENTOS E INTERPRETAÇÕES)
+    // -----------------------------------------------------------------------
+    const DOCUMENTS_DB = {
+      'brasil-chile': {
+        id: 'brasil-chile',
+        title: 'Acordo de Livre Comércio Brasil-Chile',
+        registry: 'Registro Concórdia nº 12314 • Decreto nº 10.949/2022',
+        scope: 'Capítulo 8 — Comércio e Investimentos (Arts. 8.15 a 8.24)',
+        articles: [
+          {
+            code: 'Artigo 8.15',
+            title: 'Responsabilidade Social Corporativa',
+            text: 'As Partes reafirmam a importância de que cada Parte encoraje as empresas que operam em seu território ou sujeitas à sua jurisdição a incorporar voluntariamente em suas políticas internas padrões internacionalmente reconhecidos de responsabilidade social corporativa, tais como as Diretrizes da OCDE para Empresas Multinacionais.'
+          },
+          {
+            code: 'Artigo 8.17',
+            title: 'Preservação das Competências Regulatórias',
+            text: 'Nenhuma disposição deste Capítulo será interpretada no sentido de impedir que uma Parte adote, mantenha ou faça cumprir qualquer medida que considere apropriada para garantir que a atividade de investimento em seu território seja realizada de maneira sensível a preocupações ambientais, de saúde ou outros objetivos regulatórios.'
+          },
+          {
+            code: 'Artigo 8.18',
+            title: 'Comitê Conjunto do Capítulo',
+            text: 'As Partes estabelecem um Comitê Conjunto composto por representantes governamentais de cada Parte, com a função de supervisionar a implementação e execução deste Capítulo, trocar informações e facilitar o diálogo bilateral.'
+          },
+          {
+            code: 'Artigo 8.19',
+            title: 'Pontos Focais Nacionais (Ombudsman)',
+            text: 'Cada Parte designará um Ponto Focal Nacional para prestar assistência aos investidores da outra Parte, responder a consultas e atuar na prevenção de controvérsias antes da instauração de mecanismos formais.'
+          },
+          {
+            code: 'Artigo 8.22',
+            title: 'Cooperação sobre Capital Humano e Trabalho',
+            text: 'As Partes reconhecem a relevância da cooperação técnica voltada à qualificação do capital humano, intercâmbio de boas práticas laborais e promoção do desenvolvimento produtivo sustentável entre os dois países.'
+          },
+          {
+            code: 'Artigo 8.24',
+            title: 'Consultas Diretas e Prevenção de Litígios',
+            text: 'Antes de recorrer a qualquer procedimento formal de solução de controvérsias, as Partes buscarão resolver qualquer divergência relativa à interpretação ou aplicação deste Capítulo por meio de consultas diretas e negociações de boa-fé.'
+          }
+        ],
+        quotes: [
+          {
+            ref: 'Art. 8.17 (Trecho-chave)',
+            text: '“Nenhuma disposição deste Capítulo será interpretada no sentido de impedir que uma Parte adote, mantenha ou faça cumprir qualquer medida [...] em seu território.”'
+          },
+          {
+            ref: 'Art. 8.15 (Trecho-chave)',
+            text: '“[...] encoraje as empresas [...] a incorporar voluntariamente [...] padrões internacionalmente reconhecidos, tais como as Diretrizes da OCDE.”'
+          }
+        ],
+        interpretations: {
+          realismo: {
+            label: 'Leitura Realista (Poder, Soberania e Interesse Nacional)',
+            content: `
+              <p>Sob a perspectiva do <strong>Realismo</strong> (Raymond Aron; Jackson & Sørensen), o Capítulo 8 do Acordo de Livre Comércio Brasil-Chile demonstra como os Estados negociam mecanismos de cooperação econômica sem abdicar de sua autonomia decisória fundamental.</p>
+              <p>O <strong>Artigo 8.17</strong> funciona como uma cláusula de salvaguarda soberana: ao assegurar que nenhuma disposição impede o Estado de adotar medidas regulatórias internas, Brasília e Santiago preservam sua jurisdição doméstica frente a interesses privados estrangeiros.</p>
+              <p>Ademais, o <strong>Artigo 8.18</strong> centraliza a governança do tratado em um <em>Comitê Conjunto</em> formado exclusivamente por agentes governamentais, confirmando a premissa realista de que os Estados permanecem os atores centrais e os guardiões finais da distribuição de ganhos e custos do acordo.</p>
+            `
+          },
+          marxismo: {
+            label: 'Leitura Marxista (Capital, Produção e Desigualdades)',
+            content: `
+              <p>A partir de uma abordagem <strong>Marxista e Crítica</strong> (Samuel Pinheiro Guimarães; Nogueira & Messari), o texto revela as tensões estruturais entre a facilitação da circulação transnacional do capital e a proteção efetiva do trabalho e dos interesses sociais.</p>
+              <p>No <strong>Artigo 8.15</strong>, a responsabilidade social das empresas multinacionais é tratada sob a chave do <em>encorajamento voluntário</em>, ancorada nas Diretrizes da OCDE — instituição historicamente vinculada aos países centrais do capitalismo. Nota-se uma assimetria normativa: enquanto os fluxos de investimento recebem garantias institucionais claras, os deveres sociais permanecem não vinculantes.</p>
+              <p>Já o <strong>Artigo 8.22</strong> aborda o trabalho sob a terminologia econômica de <em>“capital humano”</em>, integrando a força de trabalho à lógica da produtividade e da competitividade regional sem estabelecer mecanismos coercitivos de redistribuição de benefícios.</p>
+            `
+          },
+          inglesa: {
+            label: 'Leitura da Escola Inglesa (Normas, Instituições e Ordem)',
+            content: `
+              <p>Sob a lente da <strong>Escola Inglesa</strong> (Hedley Bull), o Acordo Brasil-Chile ilustra o funcionamento da <em>sociedade internacional</em> no espaço sul-americano, onde Estados soberanos constroem regras e instituições compartilhadas para estabilizar suas expectativas mútuas.</p>
+              <p>Os <strong>Artigos 8.18 e 8.19</strong> instituem o Comitê Conjunto e os Pontos Focais Nacionais, materializando a diplomacia institucionalizada como instrumento de gestão ordenada das relações bilaterais.</p>
+              <p>Por sua vez, o <strong>Artigo 8.24</strong> privilegia as consultas diretas e a boa-fé antes de qualquer litígio formal, evidenciando como normas procedimentais reduzem o atrito sistêmico e fortalecem a previsibilidade da ordem internacional.</p>
+            `
+          }
+        }
+      },
+
+      'onu-2625': {
+        id: 'onu-2625',
+        title: 'Resolução 2625 (XXV) da Assembleia Geral da ONU',
+        registry: 'ONU • AGNU Res. 2625 (XXV) • 24 de outubro de 1970',
+        scope: 'Declaração sobre Princípios de Direito Internacional referentes às Relações Amistosas',
+        articles: [
+          {
+            code: 'Princípio I',
+            title: 'Proibição da Ameaça ou Uso da Força',
+            text: 'Todo Estado tem o dever de abster-se, em suas relações internacionais, de recorrer à ameaça ou ao uso da força contra a integridade territorial ou a independência política de qualquer Estado.'
+          },
+          {
+            code: 'Princípio III',
+            title: 'Dever de Não-Intervenção',
+            text: 'Nenhum Estado ou grupo de Estados tem o direito de intervir, direta ou indiretamente, por qualquer motivo que seja, nos assuntos internos ou externos de qualquer outro Estado.'
+          },
+          {
+            code: 'Princípio VI',
+            title: 'Igualdade Soberana dos Estados',
+            text: 'Todos os Estados gozam de igualdade soberana. Têm direitos e deveres iguais e são membros iguais da comunidade internacional, não obstante as diferenças de ordem econômica, social, política ou de outra natureza.'
+          }
+        ],
+        quotes: [
+          {
+            ref: 'Princípio VI (Igualdade Soberana)',
+            text: '“Todos os Estados gozam de igualdade soberana [...] não obstante as diferenças de ordem econômica, social, política ou de outra natureza.”'
+          }
+        ],
+        interpretations: {
+          realismo: {
+            label: 'Leitura Realista',
+            content: `<p>Para o <strong>Realismo</strong>, a Resolução 2625 consagra formalmente o princípio de Westfália da igualdade soberana e da não-intervenção como mecanismos defensivos dos Estados contra ingerências externas. Contudo, realistas apontam que a eficácia prática da proibição do uso da força permanece condicionada ao equilíbrio de poder entre as grandes potências.</p>`
+          },
+          marxismo: {
+            label: 'Leitura Marxista',
+            content: `<p>Sob o prisma <strong>Marxista</strong>, a igualdade jurídica proclamada no Princípio VI contrasta com a desigualdade material da economia-mundo capitalista. A igualdade formal entre Estados soberanos convive com relações estruturais de dependência econômica e tecnológica entre centro e periferia.</p>`
+          },
+          inglesa: {
+            label: 'Leitura da Escola Inglesa',
+            content: `<p>Para a <strong>Escola Inglesa</strong> (Hedley Bull), a Resolução 2625 é um marco constitucional da sociedade internacional pluralista: ela codifica as regras primárias de coexistência (soberania, não-intervenção e solução pacífica de controvérsias) que permitem a ordem mesmo na ausência de um governo mundial.</p>`
+          }
+        }
+      },
+
+      'tca-amazonia': {
+        id: 'tca-amazonia',
+        title: 'Tratado de Cooperação Amazônica (TCA)',
+        registry: 'Registro Concórdia nº 3098 • Decreto nº 85.050/1980',
+        scope: 'Cooperação Regional Amazônica • Arts. I, IV e XXII',
+        articles: [
+          {
+            code: 'Artigo I',
+            title: 'Desenvolvimento Harmônico da Amazônia',
+            text: 'As Partes Contratantes convêm em realizar esforços e ações conjuntas a fim de promover o desenvolvimento harmônico de seus respectivos territórios amazônicos, de maneira a que essas ações conjuntas produzam resultados equitativos e mutuamente proveitosos.'
+          },
+          {
+            code: 'Artigo IV',
+            title: 'Soberania Exclusiva sobre Recursos Naturais',
+            text: 'As Partes Contratantes proclamam que o uso e aproveitamento exclusivo dos recursos naturais em seus respectivos territórios é direito inerente à soberania do Estado e seu exercício não sofrerá outras restrições senão as que resultem do Direito Internacional.'
+          }
+        ],
+        quotes: [
+          {
+            ref: 'Artigo IV (Soberania e Recursos)',
+            text: '“[...] o uso e aproveitamento exclusivo dos recursos naturais em seus respectivos territórios é direito inerente à soberania do Estado.”'
+          }
+        ],
+        interpretations: {
+          realismo: {
+            label: 'Leitura Realista',
+            content: `<p>O <strong>Realismo</strong> destaca o <strong>Artigo IV</strong> como o núcleo estratégico do tratado: diante de pressões internacionais sobre a região amazônica nos anos 1970, os Estados sul-americanos articularam um pacto defensivo para reafirmar sua soberania territorial exclusiva sobre os recursos naturais.</p>`
+          },
+          marxismo: {
+            label: 'Leitura Marxista',
+            content: `<p>A leitura <strong>Marxista</strong> examina como o Artigo I articula projetos estatais de integração física e exploração econômica de recursos naturais, levantando questões sobre os impactos socioambientais sobre povos tradicionais e a inserção primário-exportadora da região na divisão internacional do trabalho.</p>`
+          },
+          inglesa: {
+            label: 'Leitura da Escola Inglesa',
+            content: `<p>A <strong>Escola Inglesa</strong> observa no TCA a criação de uma sub-sociedade regional baseada na cooperação funcional, no intercâmbio científico e na concertação diplomática entre vizinhos amazônicos.</p>`
+          }
+        }
+      }
+    };
+
+    // -----------------------------------------------------------------------
+    // 2. REFERENCIAIS TEÓRICOS DETALHADOS
+    // -----------------------------------------------------------------------
+    const THEORIES_DB = {
+      realismo: {
+        name: 'Realismo nas Relações Internacionais',
+        subtitle: 'Poder, segurança, anarquia e interesses nacionais',
+        icon: 'shield',
+        concepts: ['Anarquia Internacional', 'Soberania Estatal', 'Interesse Nacional', 'Autonomia Regulatória', 'Ganhos Relativos', 'Equilíbrio de Poder'],
+        questions: [
+          'De que maneira o tratado preserva ou limita a liberdade de ação regulatória do Estado?',
+          'Quais mecanismos garantem que as decisões permaneçam sob controle governamental?',
+          'Como o acordo reflete cálculos estratégicos de segurança econômica ou geopolítica?'
+        ],
+        checklist: [
+          'Identificar cláusulas de salvaguarda, exceções soberanas e reserva de jurisdição doméstica.',
+          'Verificar a composição dos comitês gestores (exclusivamente estatais vs. supranacionais).',
+          'Observar mecanismos de denúncia, retirada ou suspensão unilateral do tratado.'
+        ],
+        authors: 'Raymond Aron, Hans Morgenthau, Kenneth Waltz, Jackson & Sørensen.'
+      },
+      marxismo: {
+        name: 'Marxismo e Teorias Críticas',
+        subtitle: 'Capital, modo de produção, classes e assimetrias estruturais',
+        icon: 'scale',
+        concepts: ['Acumulação de Capital', 'Divisão Internacional do Trabalho', 'Centro e Periferia', 'Relação Capital-Trabalho', 'Estado e Burguesia Transnacional'],
+        questions: [
+          'Como o ato internacional facilita a circulação e a proteção do capital transnacional?',
+          'Há assimetria entre obrigações vinculantes para o Estado e recomendações voluntárias para empresas?',
+          'De que forma o trabalho e a distribuição de riqueza são enquadrados no texto normativo?'
+        ],
+        checklist: [
+          'Mapear dispositivos sobre proteção de investimentos, propriedade intelectual e livre fluxo de capitais.',
+          'Contrastar o grau de obrigatoriedade jurídica entre direitos empresariais e cláusulas trabalhistas/ambientais.',
+          'Verificar a adoção de padrões normativos oriundos de instituições do centro capitalista (ex: OCDE).'
+        ],
+        authors: 'Karl Marx, Immanuel Wallerstein, Robert Cox, Samuel Pinheiro Guimarães, Nogueira & Messari.'
+      },
+      inglesa: {
+        name: 'Escola Inglesa (Sociedade Internacional)',
+        subtitle: 'Normas compartilhadas, instituições diplomáticas e ordem internacional',
+        icon: 'globe-2',
+        concepts: ['Sociedade Internacional', 'Ordem vs. Justiça', 'Direito Internacional', 'Diplomacia Institucionalizada', 'Pluralismo e Solidarismo'],
+        questions: [
+          'Quais regras e expectativas mútuas o tratado institui para estabilizar a convivência entre os Estados?',
+          'Que canais diplomáticos permanentes são criados para prevenir e mediar controvérsias?',
+          'Como o acordo articula interesses nacionais particulares com normas gerais da sociedade internacional?'
+        ],
+        checklist: [
+          'Identificar a criação de comitês bilaterais, pontos focais e rotinas de intercâmbio de informação.',
+          'Analisar os procedimentos de consultas diretas, mediação e solução pacífica de litígios.',
+          'Observar remissões a princípios gerais da Carta da ONU e do Direito Internacional Público.'
+        ],
+        authors: 'Hedley Bull, Martin Wight, Barry Buzan, Antônio Jorge Ramalho Rocha.'
+      }
+    };
+
+    // -----------------------------------------------------------------------
+    // 3. ESTADO DA APLICAÇÃO (PERSONAS & PROGRESSO)
+    // -----------------------------------------------------------------------
+    const appState = {
+      persona: 'marilia',
+      analysesCount: 3,
+      exploredTheories: new Set(['realismo']),
+      savedDocsCount: 2,
+      progressPercent: 72,
+      currentAnalysis: null
+    };
+
+    const PERSONAS = {
+      marilia: {
+        greeting: 'Olá, Marília!',
+        badge: 'Pesquisadora • Núcleo RI-UFPB',
+        subtitle: 'Bem-vinda de volta à Harpia. Continue sua investigação sobre tratados internacionais e matrizes teóricas.'
+      },
+      gabriel: {
+        greeting: 'Olá, Gabriel!',
+        badge: 'Estudante de Graduação (21 anos) • RI-UFPB',
+        subtitle: 'Explore os atos internacionais da disciplina de Teoria das Relações Internacionais com apoio guiado.'
+      },
+      helena: {
+        greeting: 'Olá, Helena!',
+        badge: 'Pesquisadora / Doutoranda (32 anos) • PPGPRI-UFPB',
+        subtitle: 'Compare interpretações teóricas e audite dispositivos normativos do Acervo Concórdia.'
+      }
+    };
+
+    // -----------------------------------------------------------------------
+    // 4. FUNÇÕES DE NAVEGAÇÃO SPA
+    // -----------------------------------------------------------------------
+    function navigateTo(view) {
+      const landing = document.getElementById('view-landing');
+      const app = document.getElementById('view-app');
+
+      if (view === 'landing') {
+        app.classList.add('hidden');
+        landing.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        landing.classList.add('hidden');
+        app.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      lucide.createIcons();
+    }
+
+    function enterPlatform(tab = 'dashboard', theoryParam = null) {
+      navigateTo('app');
+      switchAppTab(tab);
+      if (tab === 'teorias' && theoryParam) {
+        selectTheoryDetail(theoryParam);
+      }
+    }
+
+    function switchAppTab(tabId) {
+      // Esconde todas as abas
+      document.querySelectorAll('.app-tab').forEach(el => el.classList.add('hidden'));
+      
+      // Mostra a aba alvo
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      // Atualiza estilo dos botões da sidebar
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.className = 'nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition cursor-pointer bg-harpia-gold/15 text-harpia-gold border border-harpia-gold/30';
+        } else {
+          btn.className = 'nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-harpia-muted hover:bg-harpia-card hover:text-white transition cursor-pointer';
+        }
+      });
+
+      // Fecha sidebar no mobile se estiver aberta
+      const sidebar = document.getElementById('app-sidebar');
+      const overlay = document.getElementById('mobile-sidebar-overlay');
+      if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const overlay = document.getElementById('mobile-sidebar-overlay');
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. PERSONA E ATUALIZAÇÃO DINÂMICA DE PROGRESSO
+    // -----------------------------------------------------------------------
+    function changePersona(personaKey) {
+      appState.persona = personaKey;
+      const p = PERSONAS[personaKey];
+      document.getElementById('greeting-title').textContent = p.greeting;
+      document.getElementById('persona-badge').textContent = p.badge;
+      document.getElementById('greeting-subtitle').textContent = p.subtitle;
+      showToast(`Perfil alterado para: ${p.greeting.replace('Olá, ', '').replace('!', '')}`);
+    }
+
+    function updateProgressUI() {
+      const pct = Math.min(100, appState.progressPercent);
+      const circumference = 314.16;
+      const offset = circumference - (pct / 100) * circumference;
+
+      document.getElementById('progress-circle-bar').style.strokeDashoffset = offset.toFixed(2);
+      document.getElementById('progress-percent-text').textContent = `${pct}%`;
+      document.getElementById('stat-analyses-count').textContent = appState.analysesCount;
+      document.getElementById('stat-theories-count').textContent = `${appState.exploredTheories.size} / 3`;
+      document.getElementById('stat-saved-count').textContent = appState.savedDocsCount;
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. MÓDULO INTERATIVO: ANALISAR DOCUMENTO
+    // -----------------------------------------------------------------------
+    function handleDocSelectChange(val) {
+      const customBox = document.getElementById('custom-text-container');
+      const metaPreview = document.getElementById('doc-meta-preview');
+
+      if (val === 'custom') {
+        customBox.classList.remove('hidden');
+        metaPreview.innerHTML = `<span class="text-harpia-muted">Modo:</span><span class="text-harpia-goldLight font-medium">Texto Personalizado Inserido pelo Usuário</span>`;
+      } else {
+        customBox.classList.add('hidden');
+        const doc = DOCUMENTS_DB[val];
+        metaPreview.innerHTML = `<span class="text-harpia-muted">Escopo selecionado:</span><span class="text-harpia-goldLight font-medium">${doc.scope}</span>`;
+      }
+    }
+
+    function quickOpenAnalysis(docId, theories) {
+      switchAppTab('analisar');
+      document.getElementById('doc-selector').value = docId;
+      handleDocSelectChange(docId);
+
+      // Marca os checkboxes correspondentes
+      document.querySelectorAll('input[name="theory-choice"]').forEach(cb => {
+        cb.checked = theories.includes(cb.value);
+      });
+
+      runAIAnalysis(true);
+    }
+
+    function runAIAnalysis(instant = false) {
+      const docVal = document.getElementById('doc-selector').value;
+      const selectedTheories = Array.from(document.querySelectorAll('input[name="theory-choice"]:checked')).map(cb => cb.value);
+
+      if (selectedTheories.length === 0) {
+        showToast('Selecione pelo menos uma perspectiva teórica antes de executar.', 'warning');
+        return;
+      }
+
+      // Validação para texto personalizado
+      let docData;
+      if (docVal === 'custom') {
+        const customTitle = document.getElementById('custom-doc-title').value.trim() || 'Ato Internacional Personalizado';
+        const customText = document.getElementById('custom-doc-text').value.trim();
+        if (!customText) {
+          showToast('Cole o trecho do tratado na caixa de texto antes de analisar.', 'warning');
+          return;
+        }
+        docData = buildCustomDocAnalysis(customTitle, customText);
+      } else {
+        docData = DOCUMENTS_DB[docVal];
+      }
+
+      const loadingEl = document.getElementById('analysis-loading');
+      const resultEl = document.getElementById('analysis-result-container');
+      const stepText = document.getElementById('loading-step-text');
+
+      resultEl.classList.add('hidden');
+      loadingEl.classList.remove('hidden');
+
+      const delay = instant ? 250 : 1100;
+
+      if (!instant) {
+        setTimeout(() => {
+          stepText.textContent = '[2/3] Ancorando dispositivos normativos e construindo prompt teórico...';
+        }, 400);
+        setTimeout(() => {
+          stepText.textContent = '[3/3] Gerando síntese interpretativa e verificando referências bibliográficas...';
+        }, 800);
+      }
+
+      setTimeout(() => {
+        loadingEl.classList.add('hidden');
+        renderAnalysisResult(docData, selectedTheories);
+        resultEl.classList.remove('hidden');
+
+        // Atualiza métricas do dashboard
+        appState.analysesCount += 1;
+        selectedTheories.forEach(t => appState.exploredTheories.add(t));
+        appState.progressPercent = Math.min(100, appState.progressPercent + 6);
+        appState.currentAnalysis = docData.title;
+        updateProgressUI();
+
+        if (!instant) {
+          showToast('Análise teórica concluída com sucesso!');
+        }
+        lucide.createIcons();
+      }, delay);
+    }
+
+    function buildCustomDocAnalysis(title, rawText) {
+      return {
+        id: 'custom',
+        title: title,
+        registry: 'Entrada Manual • Verificação Pendente no Concórdia MRE',
+        scope: 'Trecho submetido diretamente pelo pesquisador',
+        articles: [
+          {
+            code: 'Trecho Submetido',
+            title: 'Dispositivo Normativo Analisado',
+            text: rawText
+          }
+        ],
+        quotes: [
+          {
+            ref: 'Excerto do Texto Inserido',
+            text: `“${rawText.substring(0, 180)}${rawText.length > 180 ? '...' : ''}”`
+          }
+        ],
+        interpretations: {
+          realismo: {
+            label: 'Leitura Realista (Trecho Personalizado)',
+            content: `<p>Sob o prisma <strong>Realista</strong>, o trecho submetido deve ser interrogado quanto ao grau de comprometimento da soberania estatal: verifica-se se os verbos normativos impõem obrigações rígidas ou preservam margem de discricionariedade para a política externa e regulatória das Partes.</p>`
+          },
+          marxismo: {
+            label: 'Leitura Marxista (Trecho Personalizado)',
+            content: `<p>Sob a ótica <strong>Marxista</strong>, investiga-se quais interesses materiais e frações de classe são beneficiados pelas regras estipuladas no excerto, observando possíveis assimetrias entre agentes econômicos transnacionais e direitos sociais/laborais.</p>`
+          },
+          inglesa: {
+            label: 'Leitura da Escola Inglesa (Trecho Personalizado)',
+            content: `<p>Para a <strong>Escola Inglesa</strong>, o dispositivo analisado contribui para institucionalizar expectativas compartilhadas e regras de conduta diplomática, fortalecendo a previsibilidade normativa entre os membros da sociedade internacional.</p>`
+          }
+        }
+      };
+    }
+
+    function renderAnalysisResult(docData, selectedTheories) {
+      const theoryNames = {
+        realismo: 'Realismo',
+        marxismo: 'Marxismo',
+        inglesa: 'Escola Inglesa'
+      };
+
+      document.getElementById('res-doc-registry').textContent = docData.registry;
+      document.getElementById('res-doc-title').textContent = docData.title;
+      document.getElementById('res-doc-subtitle').textContent =
+        `${docData.scope} • Lente(s) aplicada(s): ${selectedTheories.map(t => theoryNames[t]).join(', ')}`;
+
+      // 1. Preenche Interpretação Teórica
+      const interpBody = document.getElementById('res-interpretation-body');
+      interpBody.innerHTML = selectedTheories.map(tKey => {
+        const block = docData.interpretations[tKey];
+        return `
+          <div class="p-5 rounded-xl bg-harpia-bg border border-harpia-border/90 space-y-2.5">
+            <div class="flex items-center gap-2 text-harpia-gold font-bold text-sm">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>${block.label}</span>
+            </div>
+            <div class="text-slate-300 space-y-2.5 text-sm leading-relaxed">
+              ${block.content}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 2. Preenche Dispositivos Relevantes
+      const articlesBody = document.getElementById('res-articles-body');
+      articlesBody.innerHTML = docData.articles.map(art => `
+        <div class="p-4 rounded-xl bg-harpia-bg border border-harpia-border">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-harpia-gold font-mono">${art.code}</span>
+            <span class="text-xs font-semibold text-white">${art.title}</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">${art.text}</p>
+        </div>
+      `).join('');
+
+      // 3. Preenche Prompt Interno
+      const promptText = `SISTEMA HARPIA (UFPB - RI 2026) | PROTOCOLO DE ANÁLISE DOCUMENTAL
+------------------------------------------------------------------
+ATO INTERNACIONAL: ${docData.title}
+REGISTRO: ${docData.registry}
+MATRIZES ATIVADAS: ${selectedTheories.map(t => theoryNames[t].toUpperCase()).join(' + ')}
+
+DIRETRIZES DE CONTROLE EPISTEMOLÓGICO:
+1. Separar rigorosamente metadados oficiais, texto normativo literal e inferência teórica.
+2. Ancorar cada argumento interpretativo nos artigos específicos do documento (${docData.articles.map(a => a.code).join(', ')}).
+3. Evitar determinismos: o texto isolado não comprova exploração econômica nem conflito concreto.
+4. Mobilizar bibliografia acadêmica de referência (Aron, Bull, Guimarães, Jackson & Sørensen, Nogueira & Messari, Rocha).`;
+      document.getElementById('res-prompt-box').textContent = promptText;
+
+      // 4. Preenche Trechos Laterais
+      const sidebarQuotes = document.getElementById('res-sidebar-quotes');
+      sidebarQuotes.innerHTML = docData.quotes.map(q => `
+        <div class="p-3.5 rounded-xl bg-harpia-bg border-l-2 border-harpia-gold text-xs space-y-1">
+          <div class="font-bold text-harpia-goldLight">${q.ref}</div>
+          <p class="text-slate-300 italic leading-relaxed">${q.text}</p>
+        </div>
+      `).join('');
+
+      // Reseta para a primeira sub-aba
+      switchResultSubtab('interpretacao');
+    }
+
+    function switchResultSubtab(subtab) {
+      document.querySelectorAll('.res-subtab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`res-subtab-${subtab}`).classList.remove('hidden');
+
+      document.querySelectorAll('.res-subtab-btn').forEach(btn => {
+        if (btn.dataset.resTab === subtab) {
+          btn.className = 'res-subtab-btn px-5 py-3.5 text-xs sm:text-sm font-semibold text-harpia-gold border-b-2 border-harpia-gold whitespace-nowrap cursor-pointer';
+        } else {
+          btn.className = 'res-subtab-btn px-5 py-3.5 text-xs sm:text-sm font-semibold text-harpia-muted hover:text-white whitespace-nowrap cursor-pointer';
+        }
+      });
+    }
+
+    function saveCurrentAnalysis() {
+      appState.savedDocsCount += 1;
+      appState.progressPercent = Math.min(100, appState.progressPercent + 4);
+      updateProgressUI();
+      showToast('Documento e análise salvos na sua biblioteca de pesquisa!');
+    }
+
+    // -----------------------------------------------------------------------
+    // 7. COMPARADOR TEÓRICO INTERATIVO
+    // -----------------------------------------------------------------------
+    function filterComparator(filter) {
+      const cols = document.querySelectorAll('.comp-col');
+      const grid = document.getElementById('comparator-grid');
+
+      document.querySelectorAll('.comp-filter-btn').forEach(btn => {
+        if (btn.dataset.compFilter === filter) {
+          btn.className = 'comp-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-harpia-gold text-harpia-bg cursor-pointer';
+        } else {
+          btn.className = 'comp-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold cursor-pointer';
+        }
+      });
+
+      if (filter === 'all') {
+        grid.className = 'grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6';
+        cols.forEach(c => c.classList.remove('hidden'));
+      } else {
+        grid.className = 'grid grid-cols-1 max-w-3xl mx-auto gap-6 mt-6';
+        cols.forEach(c => {
+          if (c.dataset.compCol === filter) {
+            c.classList.remove('hidden');
+          } else {
+            c.classList.add('hidden');
+          }
+        });
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 8. REFERENCIAIS TEÓRICOS
+    // -----------------------------------------------------------------------
+    function openTheoryFromDashboard(theoryKey) {
+      switchAppTab('teorias');
+      selectTheoryDetail(theoryKey);
+    }
+
+    function selectTheoryDetail(theoryKey) {
+      appState.exploredTheories.add(theoryKey);
+      updateProgressUI();
+
+      // Atualiza botões
+      document.querySelectorAll('.theory-tab-btn').forEach(btn => {
+        if (btn.dataset.theoryTab === theoryKey) {
+          btn.className = 'theory-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold bg-harpia-gold text-harpia-bg flex items-center gap-2 cursor-pointer';
+        } else {
+          btn.className = 'theory-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold bg-harpia-bg border border-harpia-border text-slate-300 hover:border-harpia-gold flex items-center gap-2 cursor-pointer';
+        }
+      });
+
+      const t = THEORIES_DB[theoryKey];
+      const container = document.getElementById('theory-detail-content');
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <div class="bg-harpia-card border border-harpia-border rounded-2xl p-6">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-10 h-10 rounded-xl bg-harpia-gold/15 text-harpia-gold flex items-center justify-center">
+                  <i data-lucide="${t.icon}" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h2 class="font-display text-xl font-bold text-white">${t.name}</h2>
+                  <p class="text-xs text-harpia-gold">${t.subtitle}</p>
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-harpia-muted mb-3">Conceitos-Chave Operacionais</h3>
+                <div class="flex flex-wrap gap-2">
+                  ${t.concepts.map(c => `<span class="px-3 py-1.5 rounded-lg bg-harpia-bg border border-harpia-border text-xs text-harpia-goldLight font-medium">${c}</span>`).join('')}
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-harpia-muted mb-3">Perguntas Orientadoras para Leitura de Tratados</h3>
+                <ul class="space-y-2.5 text-sm text-slate-200">
+                  ${t.questions.map(q => `
+                    <li class="flex items-start gap-2.5 bg-harpia-bg/70 p-3 rounded-xl border border-harpia-border/60">
+                      <i data-lucide="help-circle" class="w-4 h-4 text-harpia-gold shrink-0 mt-0.5"></i>
+                      <span>${q}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-harpia-card border border-harpia-gold/30 rounded-2xl p-6">
+              <h3 class="font-display text-base font-bold text-white mb-3 flex items-center gap-2">
+                <i data-lucide="check-square" class="w-4 h-4 text-harpia-gold"></i>
+                <span>O que investigar no documento</span>
+              </h3>
+              <ul class="space-y-3 text-xs text-slate-300">
+                ${t.checklist.map(item => `
+                  <li class="flex items-start gap-2.5">
+                    <span class="w-4 h-4 rounded bg-harpia-gold/20 text-harpia-gold flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                    <span class="leading-relaxed">${item}</span>
+                  </li>
+                `).join('')}
+              </ul>
+
+              <div class="mt-6 pt-4 border-t border-harpia-border">
+                <div class="text-[11px] font-bold uppercase text-harpia-gold mb-1">Autores de Referência</div>
+                <p class="text-xs text-harpia-muted">${t.authors}</p>
+              </div>
+
+              <button onclick="quickOpenAnalysis('brasil-chile', ['${theoryKey}'])" class="mt-5 w-full gold-btn py-2.5 rounded-xl text-xs font-bold cursor-pointer">
+                Aplicar esta teoria ao Acordo Brasil-Chile
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    // -----------------------------------------------------------------------
+    // 9. NOTIFICAÇÕES TOAST (SEM ALERT)
+    // -----------------------------------------------------------------------
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const borderColor = type === 'warning' ? 'border-amber-500 text-amber-300' : 'border-harpia-gold text-harpia-goldLight';
+
+      toast.className = `pointer-events-auto bg-harpia-surface border ${borderColor} px-4 py-3 rounded-xl shadow-2xl text-xs font-medium flex items-center gap-2.5 fade-in max-w-sm`;
+      toast.innerHTML = `
+        <i data-lucide="${type === 'warning' ? 'alert-triangle' : 'check-circle'}" class="w-4 h-4 shrink-0"></i>
+        <span>${message}</span>
+      `;
+
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    // Inicializa conteúdo padrão da aba de teorias ao carregar
+    window.addEventListener('DOMContentLoaded', () => {
+      selectTheoryDetail('realismo');
+      updateProgressUI();
+    });
+  </script>
+</body>
+</html>
